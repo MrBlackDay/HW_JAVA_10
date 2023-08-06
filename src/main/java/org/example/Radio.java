@@ -1,48 +1,76 @@
 package org.example;
 
 public class Radio {
-    public int currentStation; //Текущая частота станции
-    public int currentVolume; //Текущая громкость звука
+    private int currentStation; //Текущая частота станции
+    private int currentVolume; //Текущая громкость звука
 
-// 1. РАДИОЧАСТОТЫ
     public int getCurrentStation() { //Получение значения станции
         return currentStation;
     }
-    public void setNextStation(int newCurrentStation) { //Переключение станций вперед
-        if (newCurrentStation >= 9) {
+
+    public int getCurrentVolume() { //Получение значения громкости
+        return currentVolume;
+    }
+
+    // ПЕРЕКЛЮЧЕНИЕ ГРОМКОСТИ
+    public void setCurrentVolume(int newCurrentVolume) { //Изменение громкости в пределах допустимых значений
+        if (newCurrentVolume < 0) {
+            this.currentVolume = 0;
+            return;
+        }
+        if (newCurrentVolume > 100) {
+            this.currentVolume = 100;
+            return;
+        }
+        this.currentVolume = newCurrentVolume;
+    }
+
+    public void IncreaseVolume() { //Повышение громкости
+        if (currentVolume < 100) {
+            currentVolume++;
+            return;
+        }
+        currentVolume = 100;
+    }
+
+    public void DecreaseVolume() { //Уменьшение громкости
+        if (currentVolume > 0) {
+            currentVolume--;
+            return;
+        }
+        currentVolume = 0;
+    }
+
+    // ПЕРЕКЛЮЧЕНИЕ СТАНЦИЙ
+
+    public void setCurrentStation(int newCurrentStation) { //Переключение станций в пределах допустимого диапазона
+        if (newCurrentStation < 0) {
+            //this.currentStation = 9;
+            return;
+        }
+        if (newCurrentStation > 9) {
+            //this.currentStation = 0;
+            return;
+        }
+        this.currentStation = newCurrentStation;
+    }
+
+    public void nextStation() { //Переключение станций вперед
+        if (currentStation != 9) {
+            currentStation++;
+        } else {
             currentStation = 0;
-        } else {
-            currentStation = newCurrentStation + 1;
         }
-    }
-    public void setPrevCurrentStation(int newCurrentStation) { //Переключение станций назад
-        if (newCurrentStation <= 0) {
-            currentStation = 9;
-        } else {
-            currentStation = newCurrentStation - 1;
-        }
-    }
-// 2. ГРОМКОСТЬ
-public int getCurrentVolume() { //Получение значения громкости
-    return currentVolume;
-}
-    public void setIncreaseVolume (int newVolume) { //Повышение громкости (граничные значения от 0 до 100)
-        if (newVolume >= 100) {
-            currentVolume = 100;
-        } else {
-            currentVolume = newVolume + 1;
-        }
-    }
-    public void setDecreaseVolume (int newVolume) { //Понижение громкости (граничные значения от 0 до 100)
-        if (newVolume <= 0) {
-            currentVolume = 0;
-        } else {
-            currentVolume = newVolume - 1;
-        }
+
     }
 
-
-
+    public void prevStation() { //Переключение станций назад
+        if (currentStation > 0) {
+            currentStation--;
+            return;
+        }
+        currentStation = 9;
+    }
 }
 
 
