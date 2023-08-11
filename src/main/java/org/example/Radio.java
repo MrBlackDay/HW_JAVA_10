@@ -1,79 +1,104 @@
 package org.example;
 
 public class Radio {
-    private int currentStation; //Текущая частота станции
-    private int currentVolume; //Текущая громкость звука
+    private int maxStationStandard = 9;
+    private int minStationStandard = 0;
+    private int currentStation = minStationStandard; //Текущая частота станции
+
+    private int maxVolumeStandard = 100;
+    private int minVolumeStandard = 0;
+    private int currentVolume = minVolumeStandard; //Текущая громкость звука
+
+    public int getMinStationStandard() { //Получение значения станции
+
+        return minStationStandard;
+    }
+
+    public int getMaxStationStandard() { //Получение значения станции
+
+        return maxStationStandard;
+    }
 
     public int getCurrentStation() { //Получение значения станции
+
         return currentStation;
     }
 
     public int getCurrentVolume() { //Получение значения громкости
+
         return currentVolume;
     }
 
-    // ПЕРЕКЛЮЧЕНИЕ ГРОМКОСТИ
-    public void setCurrentVolume(int newCurrentVolume) { //Изменение громкости в пределах допустимых значений
-        if (newCurrentVolume < 0) {
-            this.currentVolume = 0;
+    //КОНСТРУКТОРЫ
+    public Radio() { //Использование стандартных значений максимальной и минимальной станций
+        int maxStation = this.maxStationStandard;
+        int minStation = this.minStationStandard;
+    }
+
+    public Radio(int amountStation) { // Установка пользовательского диапазона значений станций
+        if (amountStation <= 0){ //проверка на невалидное значение (отрицательное) количества станций
             return;
         }
-        if (newCurrentVolume > 100) {
-            this.currentVolume = 100;
+        this.maxStationStandard = this.minStationStandard + amountStation;
+
+    }
+
+
+    // ПЕРЕКЛЮЧЕНИЕ ГРОМКОСТИ
+    public void setCurrentVolume(int newCurrentVolume) { //Изменение громкости в пределах допустимых значений
+        if (newCurrentVolume < minVolumeStandard) {
+            this.currentVolume = minVolumeStandard;
+            return;
+        }
+        if (newCurrentVolume > maxVolumeStandard) {
+            this.currentVolume = maxVolumeStandard;
             return;
         }
         this.currentVolume = newCurrentVolume;
     }
 
     public void IncreaseVolume() { //Повышение громкости
-        if (currentVolume < 100) {
+        if (currentVolume < maxVolumeStandard) {
             currentVolume++;
             return;
         }
-        currentVolume = 100;
+        currentVolume = maxVolumeStandard;
     }
 
     public void DecreaseVolume() { //Уменьшение громкости
-        if (currentVolume > 0) {
+        if (currentVolume > minVolumeStandard) {
             currentVolume--;
             return;
         }
-        currentVolume = 0;
+        currentVolume = minVolumeStandard;
     }
 
     // ПЕРЕКЛЮЧЕНИЕ СТАНЦИЙ
 
     public void setCurrentStation(int newCurrentStation) { //Переключение станций в пределах допустимого диапазона
-        if (newCurrentStation < 0) {
-            //this.currentStation = 9;
+        if (newCurrentStation < minStationStandard) {
             return;
         }
-        if (newCurrentStation > 9) {
-            //this.currentStation = 0;
+        if (newCurrentStation > maxStationStandard) {
             return;
         }
         this.currentStation = newCurrentStation;
     }
 
     public void nextStation() { //Переключение станций вперед
-        if (currentStation != 9) {
+        if (currentStation != maxStationStandard) {
             currentStation++;
         } else {
-            currentStation = 0;
+            currentStation = minStationStandard;
         }
 
     }
 
     public void prevStation() { //Переключение станций назад
-        if (currentStation > 0) {
+        if (currentStation > minStationStandard) {
             currentStation--;
             return;
         }
-        currentStation = 9;
+        currentStation = maxStationStandard;
     }
 }
-
-
-
-
-

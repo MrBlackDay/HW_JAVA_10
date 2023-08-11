@@ -4,6 +4,60 @@ import org.junit.jupiter.api.Test;
 
 public class RadioTest {
 
+
+    //ТЕСТЫ КОНСТРУКТОРОВ NEW
+    @Test
+    public void shouldSetBasicRangeRadioStations(){ //использование стандартных станций
+
+        Radio target = new Radio();
+
+        Assertions.assertEquals(0, target.getMinStationStandard());
+        Assertions.assertEquals(9, target.getMaxStationStandard());
+    }
+    @Test
+    public void shouldSetAmountStations(){
+
+        Radio target = new Radio(20); // установка валидного значения диапазона станций
+
+        Assertions.assertEquals(0, target.getMinStationStandard());
+        Assertions.assertEquals(20, target.getMaxStationStandard());
+    }
+
+    @Test
+    public void shouldNotSetAmountStations(){
+
+        Radio target = new Radio(-20); // установка невалидного значения диапазона станций
+
+        Assertions.assertEquals(0, target.getMinStationStandard());
+        Assertions.assertEquals(9, target.getMaxStationStandard());
+    }
+
+    @Test
+    public void shouldNotSetAmountStationsOutsideLimit(){
+
+        Radio target = new Radio(-1); // установка невалидного отрицательного значения диапазона станций (граничные значения)
+
+        Assertions.assertEquals(0, target.getMinStationStandard());
+        Assertions.assertEquals(9, target.getMaxStationStandard());
+    }
+    @Test
+    public void shouldNotSetAmountStationsZero(){
+
+        Radio target = new Radio(0); // установка невалидного нулевого значения диапазона станций (граничные значения)
+
+        Assertions.assertEquals(0, target.getMinStationStandard());
+        Assertions.assertEquals(9, target.getMaxStationStandard());
+    }
+    @Test
+    public void shouldSetAmountStationsInsideLimit(){
+
+        Radio target = new Radio(1); // установка валидного значения диапазона станций (граничные значения)
+
+        Assertions.assertEquals(0, target.getMinStationStandard());
+        Assertions.assertEquals(1, target.getMaxStationStandard());
+    }
+
+
     // 1. ТЕСТЫ ПЕРЕКЛЮЧЕНИЯ ГРОМКОСТИ
     // 1.1. ПОВЫШЕНИЕ ГРОМКОСТИ ЗВУКА
     @Test // увеличение громкости при недопустимом исходном значении (больше максимально допустимого)
@@ -27,6 +81,8 @@ public class RadioTest {
         int actual = radio.getCurrentVolume();
         Assertions.assertEquals(expected, actual);
     }
+
+
 
     // 1.1.1 ГРАНИЧНЫЕ ЗНАЧЕНИЯ (ВЕРХНЯЯ ГРАНИЦА ДОПУСТИМЫХ ЗНАЧЕНИЙ)
     @Test
