@@ -9,6 +9,20 @@ public class Radio {
     private int minVolumeStandard = 0;
     private int currentVolume = minVolumeStandard; //Текущая громкость звука
 
+    //КОНСТРУКТОРЫ
+    public Radio() { //Использование стандартных значений максимальной и минимальной станций
+        int maxStation = this.maxStationStandard;
+        int minStation = this.minStationStandard;
+    }
+
+    public Radio(int amountStation) { // Установка пользовательского диапазона значений станций
+        if (amountStation <= 0){ //проверка на невалидное значение (отрицательное) количества станций
+            return;
+        }
+        this.maxStationStandard = this.minStationStandard + amountStation;
+
+    }
+
     public int getMinStationStandard() { //Получение значения станции
 
         return minStationStandard;
@@ -29,21 +43,6 @@ public class Radio {
         return currentVolume;
     }
 
-    //КОНСТРУКТОРЫ
-    public Radio() { //Использование стандартных значений максимальной и минимальной станций
-        int maxStation = this.maxStationStandard;
-        int minStation = this.minStationStandard;
-    }
-
-    public Radio(int amountStation) { // Установка пользовательского диапазона значений станций
-        if (amountStation <= 0){ //проверка на невалидное значение (отрицательное) количества станций
-            return;
-        }
-        this.maxStationStandard = this.minStationStandard + amountStation;
-
-    }
-
-
     // ПЕРЕКЛЮЧЕНИЕ ГРОМКОСТИ
     public void setCurrentVolume(int newCurrentVolume) { //Изменение громкости в пределах допустимых значений
         if (newCurrentVolume < minVolumeStandard) {
@@ -57,7 +56,7 @@ public class Radio {
         this.currentVolume = newCurrentVolume;
     }
 
-    public void IncreaseVolume() { //Повышение громкости
+    public void increaseVolume() { //Повышение громкости
         if (currentVolume < maxVolumeStandard) {
             currentVolume++;
             return;
@@ -65,7 +64,7 @@ public class Radio {
         currentVolume = maxVolumeStandard;
     }
 
-    public void DecreaseVolume() { //Уменьшение громкости
+    public void decreaseVolume() { //Уменьшение громкости
         if (currentVolume > minVolumeStandard) {
             currentVolume--;
             return;
